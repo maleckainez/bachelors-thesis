@@ -24,7 +24,7 @@ The project is divided into three main modules:
 
 1. **Object detection module**
 
-   The detection module is responsible for locating road traffic participants in individual video frames. It detects objects such as pedestrians, bicycles, motorcycles, passenger cars, buses and trucks.
+   The detection module is responsible for locating road traffic participants in individual video frames. It detects objects such as pedestrians, bicycles, motorcycles, passenger cars, buses and trucks. But the main focus will be placed on detecting motor vehicles.
 
 2. **Object tracking module**
 
@@ -32,7 +32,7 @@ The project is divided into three main modules:
 
 3. **Object categorisation module**
 
-   The categorisation module is responsible for assigning detected and tracked objects to traffic-related categories required for further analysis and reporting.
+   The categorisation module is responsible for assigning detected and tracked objects to traffic-related categories required for further analysis and reporting. This module will be the most important part of my project. This module is sollely responsible for categorising every motor vehicle to correct category by identifying it's characteristics.
 
 Dividing the system into separate modules makes it possible to test and optimise each stage independently. It also allows the project to use smaller specialised models instead of relying on one computationally expensive end-to-end solution.
 
