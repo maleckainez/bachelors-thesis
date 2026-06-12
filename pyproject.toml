@@ -4,7 +4,7 @@ version = "0.0.1"
 description = "Proof-of-concept pipeline for traffic video detection, tracking and categorisation."
 readme = "README.md"
 requires-python = ">=3.10"
-licence = {text = "MIT"}
+license = {text = "MIT"}
 authors = [{name = "Inez Małecka", email = "maleckainez@gmail.com"}]
 dependencies = [
     "pydantic",
