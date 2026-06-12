@@ -1,0 +1,19 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Local data and generated artifacts
+data/raw/*
+data/annotations/*
+outputs/videos/*
+outputs/csv/*
+outputs/reports/*
+
+!data/raw/.gitkeep
+!data/annotations/.gitkeep
+!outputs/videos/.gitkeep
+!outputs/csv/.gitkeep
+!outputs/reports/.gitkeep
