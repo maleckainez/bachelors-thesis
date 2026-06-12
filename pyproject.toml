@@ -1,0 +1,111 @@
+[project]
+name = "traffic-analyzer"
+version = "0.0.1"
+description = "Proof-of-concept pipeline for traffic video detection, tracking and categorisation."
+readme = "README.md"
+requires-python = ">=3.10"
+licence = {text = "MIT"}
+authors = [{name = "Inez Małecka", email = "maleckainez@gmail.com"}]
+dependencies = [
+    "pydantic",
+    "numpy",
+    "opencv-python",
+    "pandas",
+    "pyyaml",
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "License :: OSI Approved :: MIT License",
+]
+
+[project.optional-dependencies]
+models = [
+    "torch",
+    "torchvision",
+    "ultralytics",
+]
+dev = [
+    "pytest",
+    "ruff",
+    "black",
+    "mypy",
+    "coverage",
+    "pre-commit"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src/*"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+target-version = ["py310"]
+
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+fixable = ["ALL"]
+select = ["E", "F", "I", "D"]
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["D104"]
+"tests/**/*.py" = [
+  "D101",  # Missing docstring in public class
+  "D102",  # Missing docstring in public method
+  "D103",  # Missing docstring in public function
+  "D104",  # Missing docstring in public package
+  "D105",  # Missing docstring in magic method
+  "D106",  # Missing docstring in public nested class
+  "D107",  # Missing docstring in __init__
+]
+
+
+[tool.mypy]
+python_version = "3.10"
+warn_unused_configs = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+exclude = ["tests/*", "build/"]
+
+
+[project.urls]
+Homepage = "https://github.com/maleckainez/bachelors-thesis"
+Source = "https://github.com/maleckainez/bachelors-thesis"
+
+
+[tool.coverage.run]
+branch=true
+source=["src"]
+
+[tool.coverage.report]
+show_missing = true
+omit = [
+  "tests/*",
+  "*/__init__.py",
+  "__main__.py"
+]
