@@ -1,16 +1,27 @@
-import subprocess, re
+"""Concatenate selected local video files with ffmpeg."""
+
+import re
+import subprocess
 from pathlib import Path
 
 VIDEO_DIR = Path("/Volumes/Sandisk_usb/od 6 do 14")
 OUTPUT_FILE = Path("/Volumes/Sandisk_usb/od 6 do 14/16_min_video.mp4")
 LIST_FILE = Path("/Volumes/Sandisk_usb/od 6 do 14/video_list.txt")
 VIDEO_EXTENSIONS = {".mp4", ".avi", ".mkv", ".mov", ".flv", ".wmv"}
-MAX_VIDEOS = 8 
+MAX_VIDEOS = 8
+
 
 def natural_key(path: Path):
-    """
-    Natural sorting key function for file paths. Splits the filename into parts of digits and non-digits.
-    For example, "video10.mp4" will be split into ["video", 10, ".mp4"], allowing for correct numerical sorting.
+    """Return a natural sorting key for a path.
+
+    Splits the filename into digit and non-digit parts so names such as
+    ``video2.mp4`` and ``video10.mp4`` sort in numeric order.
+
+    Args:
+        path: Path whose name should be converted into a natural sort key.
+
+    Returns:
+        List of string and integer fragments used for sorting.
     """
     return [
         int(part) if part.isdigit() else part.lower()
@@ -37,7 +48,7 @@ with LIST_FILE.open("w", encoding="utf-8") as f:
     for file in files:
         path = file.resolve().as_posix()
         f.write(f"file '{path}'\n")
-        
+
 
 cmd = [
     "ffmpeg",
@@ -48,7 +59,7 @@ cmd = [
     "-c:v", "copy",
     "-c:a", "aac",
     "-b:a", "192k",
-    str(OUTPUT_FILE)
+    str(OUTPUT_FILE),
 ]
 
 subprocess.run(cmd, check=True)

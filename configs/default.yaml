@@ -1,0 +1,20 @@
+video:
+  input_path: "data/raw/input.mp4"
+  output_video_path: "outputs/videos/annotated.mp4"
+
+detection:
+  model_name: "yolo11n.pt"
+  confidence_threshold: 0.25
+  vehicle_classes:
+    - car
+    - motorcycle
+    - bus
+    - truck
+
+tracking:
+  tracker_name: "bytetrack"
+  track_buffer: 30
+
+export:
+  per_frame_csv_path: "outputs/csv/detections_per_frame.csv"
+  tracks_csv_path: "outputs/csv/tracks_summary.csv"
