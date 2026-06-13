@@ -1,4 +1,4 @@
-"""Shared data structures for detections, tracks and benchmark results."""
+"""Pydantic models for detections, tracks, and video metadata."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from pydantic import BaseModel, model_validator
 
 
 class BoundingBox(BaseModel):
-    """Bounding box coordinates in pixel space.
+    """Axis-aligned bounding box in pixel coordinates.
 
     Attributes:
         x1: Left coordinate of the box.
@@ -23,7 +23,7 @@ class BoundingBox(BaseModel):
     @classmethod
     @model_validator(mode="after")
     def validate_coordinates(self) -> "BoundingBox":
-        """Validate bounding box coordinate order and bounds.
+        """Validate coordinate order and non-negative bounds.
 
         Raises:
             ValueError: If coordinates are negative or do not define a valid box.
@@ -43,7 +43,7 @@ class BoundingBox(BaseModel):
 
 
 class DetectionRecord(BaseModel):
-    """Single detection returned by an object detection model.
+    """Single detection produced by an object detection model.
 
     Attributes:
         video_name: Name of the processed video.
@@ -63,11 +63,12 @@ class DetectionRecord(BaseModel):
 
 
 class TrackObservation(BaseModel):
-    """Tracked object observation for one frame.
+    """Tracked object observation for a single frame.
 
     Attributes:
         video_name: Name of the processed video.
-        track_id: Index of the video frame.
+        track_id: Index of the track in the video.
+        frame_id: Index of the video frame.
         timestamp_seconds: Timestamp of the frame in seconds.
         bbox: Tracked object bounding box.
         confidence: Confidence score associated with the observation.
@@ -76,6 +77,7 @@ class TrackObservation(BaseModel):
 
     video_name: str
     track_id: int
+    frame_id: int
     timestamp_seconds: float
     bbox: BoundingBox
     confidence: float
@@ -102,3 +104,41 @@ class TrackSummary(BaseModel):
     duration_frames: int
     final_class: str
     mean_confidence: float
+
+
+class GpsMeta(BaseModel):
+    """GPS metadata associated with a video recording.
+
+    Attributes:
+        gps_time: GPS timestamp in seconds.
+        gps_lat: Latitude in decimal degrees.
+        gps_lon: Longitude in decimal degrees.
+    """
+
+    gps_time: float
+    gps_lat: float
+    gps_lon: float
+
+
+class VideoMeta(BaseModel):
+    """Metadata describing a processed video file.
+
+    Attributes:
+        video_name: Name or identifier of the video.
+        fps: Frames per second.
+        width: Frame width in pixels.
+        height: Frame height in pixels.
+        frame_count: Total number of frames.
+        creation_time: Video creation timestamp, when available.
+        duration_seconds: Duration of the video in seconds.
+        gps: Optional GPS metadata associated with the recording.
+    """
+
+    video_name: str
+    fps: float
+    width: int
+    height: int
+    frame_count: int
+    creation_time: float | None
+    duration_seconds: float
+    gps: GpsMeta | None

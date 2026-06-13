@@ -1,10 +1,4 @@
-"""Configuration loading for pipeline runs.
-
-Todo:
-- load YAML configuration,
-- validate required fields,
-- expose one config object used by scripts and benchmarks.
-"""
+"""Helpers for loading and validating pipeline configuration files."""
 
 from pathlib import Path
 
@@ -12,17 +6,17 @@ import yaml
 
 
 def load_config(config_path: str | Path) -> dict:
-    """Load a YAML configuration file.
+    """Load and validate a YAML configuration file.
 
     Args:
         config_path: Path to the YAML configuration file.
 
     Raises:
-        FileNotFoundError: If the configuration file does not exist.
-        ValueError: If the configuration file is empty or misses required sections.
+        FileNotFoundError: If the file does not exist.
+        ValueError: If the file is empty or misses required sections.
 
     Returns:
-        Parsed configuration dictionary.
+        Parsed configuration mapping.
     """
     config_path = Path(config_path)
 
@@ -39,10 +33,10 @@ def load_config(config_path: str | Path) -> dict:
 
 
 def validate_config(config: dict) -> None:
-    """Validate top-level sections in a configuration dictionary.
+    """Validate required top-level sections in a configuration mapping.
 
     Args:
-        config: Parsed configuration dictionary.
+        config: Parsed configuration mapping.
 
     Raises:
         ValueError: If any required top-level section is missing.
