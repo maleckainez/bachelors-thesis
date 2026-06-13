@@ -36,9 +36,9 @@ class BoundingBox(BaseModel):
                 "Bounding Box out of bounds! Coordinates can't have negative values"
             )
         if self.x2 <= self.x1:
-            raise ValueError("x2 must be grater than x1")
+            raise ValueError("x2 must be greater than x1")
         if self.y2 <= self.y1:
-            raise ValueError("y2 must be grater than y1")
+            raise ValueError("y2 must be greater than y1")
         return self
 
 
@@ -67,7 +67,7 @@ class TrackObservation(BaseModel):
 
     Attributes:
         video_name: Name of the processed video.
-        frame_id: Index of the video frame.
+        track_id: Index of the video frame.
         timestamp_seconds: Timestamp of the frame in seconds.
         bbox: Tracked object bounding box.
         confidence: Confidence score associated with the observation.
@@ -75,7 +75,7 @@ class TrackObservation(BaseModel):
     """
 
     video_name: str
-    frame_id: int
+    track_id: int
     timestamp_seconds: float
     bbox: BoundingBox
     confidence: float
@@ -90,7 +90,7 @@ class TrackSummary(BaseModel):
         track_id: Unique identifier assigned by the tracker.
         start_frame: First frame where the track appears.
         end_frame: Last frame where the track appears.
-        dutarion_frames: Number of frames covered by the track.
+        duration_frames: Number of frames covered by the track.
         final_class: Final class assigned to the track.
         mean_confidence: Mean confidence score across track observations.
     """
@@ -99,6 +99,6 @@ class TrackSummary(BaseModel):
     track_id: int
     start_frame: int
     end_frame: int
-    dutarion_frames: int
+    duration_frames: int
     final_class: str
     mean_confidence: float
