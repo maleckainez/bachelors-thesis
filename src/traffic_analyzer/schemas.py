@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+
+import numpy as np
 from pydantic import BaseModel, model_validator
 
 
@@ -142,3 +145,18 @@ class VideoMeta(BaseModel):
     creation_time: float | None
     duration_seconds: float
     gps: GpsMeta | None
+
+
+@dataclass(frozen=True)
+class VideoFrame:
+    """Single frame read from a video file.
+
+    Attributes:
+        frame_id: Zero-based index of the frame within the video.
+        timestamp_seconds: Presentation timestamp of the frame in seconds.
+        image: Frame image in BGR format as returned by OpenCV.
+    """
+
+    frame_id: int
+    timestamp_seconds: float
+    image: np.ndarray
